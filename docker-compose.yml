@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  ip-cn-asn:
+    build: .
+    stdin_open: true  # Equivalent to -i
+    tty: true         # Equivalent to -t
+    volumes:
+      - ./data:/data  # Optional volume for data files 

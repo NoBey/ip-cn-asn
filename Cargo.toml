@@ -1,0 +1,13 @@
+[package]
+name = "ip-cn-asn"
+version = "0.1.0"
+edition = "2021"
+authors = ["NoBey <nobey@nobey.cn>"]
+description = "A tool to detect and colorize Chinese ASN information in IP addresses"
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+regex = "1.8.4"
+lazy_static = "1.4.0"
+termcolor = "1.1" 
