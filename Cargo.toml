@@ -1,6 +1,6 @@
 [package]
 name = "ip-cn-asn"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["NoBey <nobey@nobey.cn>"]
 description = "A tool to detect and colorize Chinese ASN information in IP addresses"

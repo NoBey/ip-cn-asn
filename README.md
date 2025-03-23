@@ -22,6 +22,34 @@
 
 ## 安装
 
+### 使用安装脚本（推荐）
+
+一行命令安装：
+
+```bash
+curl -sSL https://raw.githubusercontent.com/nobey/ip-cn-asn/main/install.sh | bash
+```
+
+或者分步安装：
+
+```bash
+# 下载安装脚本
+curl -L https://raw.githubusercontent.com/nobey/ip-cn-asn/main/install.sh -o install.sh
+
+# 添加执行权限
+chmod +x install.sh
+
+# 运行安装脚本
+./install.sh
+```
+
+安装脚本会自动：
+- 检测系统架构和操作系统
+- 检查并配置环境变量
+- 检查已安装版本
+- 自动下载并安装最新版本
+- 处理文件覆盖和权限问题
+
 ### 从 GitHub Releases 下载预编译二进制文件
 
 访问 [GitHub Releases 页面](https://github.com/yourusername/ip-cn-asn/releases) 下载适合您系统的预编译二进制文件。
