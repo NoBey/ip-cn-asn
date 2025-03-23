@@ -76,29 +76,16 @@ get_system_info() {
     local os=$(uname -s | tr '[:upper:]' '[:lower:]')
     local arch=$(uname -m)
     
-    # 处理架构名称
-    case $arch in
-        x86_64)
-            arch="x86_64"
-            ;;
-        aarch64|arm64)
-            arch="aarch64"
-            ;;
-        *)
-            print_error "不支持的架构: $arch"
-            exit 1
-            ;;
-    esac
-    
-    # 处理操作系统名称
+    # 直接返回对应的系统标识符
     case $os in
         linux)
-            os="linux"
+            echo "linux-x86_64-unknown-linux-gnu"
             ;;
         darwin)
-            os="macos-intel"
-            if [ "$arch" = "aarch64" ]; then
-                os="macos-arm"
+            if [ "$arch" = "arm64" ] || [ "$arch" = "aarch64" ]; then
+                echo "macos-arm-aarch64-apple-darwin"
+            else
+                echo "macos-intel-x86_64-apple-darwin"
             fi
             ;;
         *)
@@ -106,8 +93,6 @@ get_system_info() {
             exit 1
             ;;
     esac
-    
-    echo "${os}-${arch}-apple-darwin"
 }
 
 # 获取最新版本
