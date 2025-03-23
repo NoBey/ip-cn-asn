@@ -79,7 +79,7 @@ get_system_info() {
     # 直接返回对应的系统标识符
     case $os in
         linux)
-            echo "linux-x86_64-unknown-linux-gnu"
+            echo "linux-x86_64-unknown-linux-musl"
             ;;
         darwin)
             if [ "$arch" = "arm64" ] || [ "$arch" = "aarch64" ]; then
