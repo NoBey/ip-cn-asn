@@ -93,10 +93,13 @@ get_system_info() {
     # 处理操作系统名称
     case $os in
         linux)
-            os="unknown-linux-gnu"
+            os="linux"
             ;;
         darwin)
-            os="apple-darwin"
+            os="macos-intel"
+            if [ "$arch" = "aarch64" ]; then
+                os="macos-arm"
+            fi
             ;;
         *)
             print_error "不支持的操作系统: $os"
@@ -104,7 +107,7 @@ get_system_info() {
             ;;
     esac
     
-    echo "${arch}-${os}"
+    echo "${os}-${arch}-unknown-${os}-gnu"
 }
 
 # 获取最新版本
@@ -141,9 +144,24 @@ download_and_install() {
         exit 1
     fi
     
+    # 检查下载的文件大小
+    local file_size=$(stat -f%z "$filename" 2>/dev/null || stat -c%s "$filename")
+    if [ "$file_size" -lt 1000 ]; then
+        print_error "下载的文件大小异常（${file_size}字节），可能不是正确的压缩包"
+        print_info "尝试的下载地址: $download_url"
+        cd - > /dev/null
+        rm -rf $temp_dir
+        exit 1
+    fi
+    
     # 解压文件
     print_info "正在解压文件..."
-    tar -xzf $filename
+    if ! tar -xzf $filename; then
+        print_error "解压失败，请检查文件格式是否正确"
+        cd - > /dev/null
+        rm -rf $temp_dir
+        exit 1
+    fi
     
     # 安装到系统路径
     print_info "正在安装到 /usr/local/bin..."
@@ -170,6 +188,11 @@ download_and_install() {
         print_info "安装成功！"
     else
         print_error "解压后的文件不完整"
+        print_info "当前目录内容："
+        ls -la
+        cd - > /dev/null
+        rm -rf $temp_dir
+        exit 1
     fi
     
     # 清理临时文件
