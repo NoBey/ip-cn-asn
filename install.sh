@@ -107,7 +107,7 @@ get_system_info() {
             ;;
     esac
     
-    echo "${os}-${arch}-unknown-${os}-gnu"
+    echo "${os}-${arch}-apple-darwin"
 }
 
 # 获取最新版本
@@ -127,7 +127,9 @@ get_latest_version() {
 download_and_install() {
     local version=$1
     local system=$2
-    local filename="ip-cn-asn-${version}-${system}.tar.gz"
+    # 移除版本号中的 'v' 前缀
+    local clean_version=${version#v}
+    local filename="ip-cn-asn-${clean_version}-${system}.tar.gz"
     local download_url="https://github.com/nobey/ip-cn-asn/releases/download/${version}/${filename}"
     
     print_info "正在下载 ${filename}..."
